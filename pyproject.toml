@@ -1,0 +1,23 @@
+[tool.black]
+line-length = 120
+target-version = ['py38']
+
+[tool.isort]
+line_length = 120
+multi_line_output = 3
+include_trailing_comma = true
+force_grid_wrap = 0
+use_parentheses = true
+
+[tool.pylint.MASTER]
+disable = [
+    'line-too-long',
+    'missing-module-docstring',
+    'missing-function-docstring',
+    'missing-class-docstring',
+    'invalid-name',
+    "no-else-return",
+    "too-many-ancestors",
+    "too-few-public-methods",
+    "inconsistent-return-statements"
+]
