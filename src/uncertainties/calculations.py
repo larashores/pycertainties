@@ -6,7 +6,7 @@ from sympy.core.expr import Expr
 from sympy.parsing.sympy_parser import parse_expr
 
 from uncertainties import utilities as utils
-from uncertainties.var import Var
+from uncertainties.val import Val
 
 
 def uncertainty(expr: Union[str, Expr], *variables: str) -> Expr:
@@ -38,20 +38,20 @@ def calculate(expr: Union[str, Expr], **values):
         return _calculate(expr, **constants)
 
 
-def _calculate(expr: Union[str, Expr], **values: Union[Var, Real]) -> Real:
+def _calculate(expr: Union[str, Expr], **values: Union[Val, Real]) -> Real:
     if isinstance(expr, str):
         expr = parse_expr(expr)
 
-    uncertainty_expr = uncertainty(expr, *(key for key, value in values.items() if isinstance(value, Var)))
+    uncertainty_expr = uncertainty(expr, *(key for key, value in values.items() if isinstance(value, Val)))
     to_sub = _create_subs_map(**values)
-    result = Var(float(expr.subs(to_sub).evalf()), float(uncertainty_expr.subs(to_sub).evalf()))
+    result = Val(float(expr.subs(to_sub).evalf()), float(uncertainty_expr.subs(to_sub).evalf()))
     return result
 
 
-def _create_subs_map(**values: Union[Var, Real]) -> Dict[str, Real]:
+def _create_subs_map(**values: Union[Val, Real]) -> Dict[str, Real]:
     to_sub = {}
     for sym, val in values.items():
-        if isinstance(val, Var):
+        if isinstance(val, Val):
             to_sub[sym] = val.value
             to_sub["d" + sym] = val.uncertainty
         else:

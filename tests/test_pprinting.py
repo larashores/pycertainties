@@ -3,7 +3,7 @@ import math
 import pytest
 
 from uncertainties import pprinting
-from uncertainties.var import Var
+from uncertainties.val import Val
 
 EXPECTED_UNCERTAINTY_1 = """
 f(...) = x⋅y + z
@@ -75,9 +75,9 @@ def test_pprint_uncertainty(expr, variables, expected, capsys):
 @pytest.mark.parametrize(
     "expr, values, expected",
     (
-        ("log(x)", {"x": Var(1605, 53)}, EXPECTED_CALCULATION_1),
-        ("x-log(300)", {"x": Var(math.log(1605), math.log(53))}, EXPECTED_CALCULATION_2),
-        ("x*y+z", {"x": Var(3, 0.1), "y": Var(3, 3), "z": 4}, EXPECTED_CALCULATION_3),
+        ("log(x)", {"x": Val(1605, 53)}, EXPECTED_CALCULATION_1),
+        ("x-log(300)", {"x": Val(math.log(1605), math.log(53))}, EXPECTED_CALCULATION_2),
+        ("x*y+z", {"x": Val(3, 0.1), "y": Val(3, 3), "z": 4}, EXPECTED_CALCULATION_3),
     ),
 )
 def test_(expr, values, expected, capsys):

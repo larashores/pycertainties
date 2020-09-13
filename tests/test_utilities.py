@@ -3,7 +3,7 @@ import pytest
 
 from tests.utilities import assert_approx, traverse
 from uncertainties import utilities
-from uncertainties.var import Var
+from uncertainties.val import Val
 
 
 @pytest.mark.parametrize(
@@ -12,30 +12,30 @@ from uncertainties.var import Var
         (
             np.array([[1, 2], [3, 4]]),
             np.array([[0.1, 0.2], [0.3, 0.4]]),
-            np.array([[Var(1.0, 0.1), Var(2, 0.2)], [Var(3, 0.3), Var(4.0, 0.4)]]),
+            np.array([[Val(1.0, 0.1), Val(2, 0.2)], [Val(3, 0.3), Val(4.0, 0.4)]]),
         ),
     ),
 )
-def test_to_var_array(values: np.ndarray, uncertainties: np.ndarray, expected: np.ndarray):
-    result = utilities.to_var_array(values, uncertainties)
+def test_to_val_array(values: np.ndarray, uncertainties: np.ndarray, expected: np.ndarray):
+    result = utilities.to_val_array(values, uncertainties)
     for ind in np.ndindex(result.shape):
         assert_approx(result[ind], expected[ind])
 
 
 @pytest.mark.parametrize(
-    "var_array, expected_values, expected_uncertainties",
+    "val_array, expected_values, expected_uncertainties",
     (
         (
-            np.array([[Var(1.0, 0.1), Var(2, 0.2)], [Var(3, 0.3), Var(4.0, 0.4)]]),
+            np.array([[Val(1.0, 0.1), Val(2, 0.2)], [Val(3, 0.3), Val(4.0, 0.4)]]),
             np.array([[1, 2], [3, 4]]),
             np.array([[0.1, 0.2], [0.3, 0.4]]),
         ),
     ),
 )
-def test_from_var_array(var_array: np.ndarray, expected_values: np.ndarray, expected_uncertainties: np.ndarray):
-    values, uncertainties = utilities.from_var_array(var_array)
+def test_from_val_array(val_array: np.ndarray, expected_values: np.ndarray, expected_uncertainties: np.ndarray):
+    values, uncertainties = utilities.from_val_array(val_array)
     assert values.shape == uncertainties.shape
-    for ind in np.ndindex(var_array.shape):
+    for ind in np.ndindex(val_array.shape):
         assert (values[ind], uncertainties[ind]) == pytest.approx((expected_values[ind], expected_uncertainties[ind]))
 
 
@@ -64,19 +64,19 @@ def test_reduce_recursive(function, iterables, expected):
     (
         (
             # If all have same uncertainty this is just a simple average,
-            (Var(5, 1), Var(6, 1), Var(7, 1), Var(4, 1), Var(4, 1)),
-            Var(26 / 5, 1.0),
+            (Val(5, 1), Val(6, 1), Val(7, 1), Val(4, 1), Val(4, 1)),
+            Val(26 / 5, 1.0),
         ),
         (
             # Value with large uncertainty does not skew result
             (
-                Var(1, 0.1),
-                Var(3, 0.1),
-                Var(2, 0.01),
-                Var(100, 50),
-                Var(3, 0.2),
+                Val(1, 0.1),
+                Val(3, 0.1),
+                Val(2, 0.01),
+                Val(100, 50),
+                Val(3, 0.2),
             ),
-            Var(2.002448821420095, 0.012226894387211954),
+            Val(2.002448821420095, 0.012226894387211954),
         ),
     ),
 )

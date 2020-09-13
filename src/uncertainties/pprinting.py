@@ -6,7 +6,7 @@ from sympy.core.expr import Expr
 from sympy.parsing.sympy_parser import parse_expr
 
 from uncertainties.calculations import calculate, uncertainty
-from uncertainties.var import Var
+from uncertainties.val import Val
 
 f = sp.symbols("f(...)")
 df = sp.symbols("df(...)")
@@ -29,7 +29,7 @@ def pprint_calculation(expr: Union, **values):
     sp.pprint(sp.Eq(f, expr))
     print("\t->", result.value)
 
-    sp.pprint(sp.Eq(df, uncertainty(expr, *(key for key, value in values.items() if isinstance(value, Var)))))
+    sp.pprint(sp.Eq(df, uncertainty(expr, *(key for key, value in values.items() if isinstance(value, Val)))))
     print("\t->", result.uncertainty)
 
 
@@ -50,13 +50,13 @@ def main():
     print()
 
     print("Uncertainty calculation")
-    pprint_calculation("log(x)", x=Var(1605, 53))
+    pprint_calculation("log(x)", x=Val(1605, 53))
     print()
-    pprint_calculation("x-log(300)", x=Var(math.log(1605), math.log(53)))
+    pprint_calculation("x-log(300)", x=Val(math.log(1605), math.log(53)))
     print()
-    pprint_calculation("x*y+z", x=Var(3, 0.1), y=Var(3, 3), z=4)
+    pprint_calculation("x*y+z", x=Val(3, 0.1), y=Val(3, 3), z=4)
     print()
-    pprint_calculation("x*y+z", x=Var(3, 0.1), y=Var(3, 3), z=4)
+    pprint_calculation("x*y+z", x=Val(3, 0.1), y=Val(3, 3), z=4)
     print()
 
 
