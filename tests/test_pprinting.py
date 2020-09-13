@@ -1,9 +1,10 @@
 import math
+from typing import Dict, Tuple, Union
 
 import pytest
 
 from uncertainties import pprinting
-from uncertainties.val import Val
+from uncertainties.val import Real, Val
 
 EXPECTED_UNCERTAINTY_1 = """
 f(...) = x⋅y + z
@@ -66,7 +67,7 @@ df(...) = ╲╱  dx ⋅y  + dy ⋅x
         ("sin(x)", ("x",), EXPECTED_UNCERTAINTY_3),
     ),
 )
-def test_pprint_uncertainty(expr, variables, expected, capsys):
+def test_pprint_uncertainty(expr: str, variables: Tuple[str], expected: str, capsys):
     pprinting.pprint_uncertainty(expr, *variables)
     out, _ = capsys.readouterr()
     assert out == expected.lstrip("\n")
@@ -80,7 +81,7 @@ def test_pprint_uncertainty(expr, variables, expected, capsys):
         ("x*y+z", {"x": Val(3, 0.1), "y": Val(3, 3), "z": 4}, EXPECTED_CALCULATION_3),
     ),
 )
-def test_(expr, values, expected, capsys):
+def test_(expr: str, values: Dict[str, Union[Val, Real]], expected: str, capsys):
     pprinting.pprint_calculation(expr, **values)
     out, _ = capsys.readouterr()
     assert out == expected.lstrip("\n")

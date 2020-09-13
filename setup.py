@@ -9,7 +9,7 @@ setup(
     name="uncertainties",
     packages=["uncertainties"],
     package_dir={"": "src"},
-    python_requires=">=3.4",
+    python_requires=">=3.8",
     version="1.0",
     author="Lara Shores",
     author_email="lara.shores@outlook.com",
@@ -18,12 +18,9 @@ setup(
     long_description=README,
     long_description_content_type="text/markdown",
     classifiers=[
-        "Intended Audience :: Developers",
+        "Intended Audience :: Science/Research",
         "License :: OSI Approved :: MIT License",
         "Programming Language :: Python :: 3",
-        "Topic :: Software Development"
+        "Topic :: Scientific/Engineering",
     ],
-    install_requires=[
-        "matplotobjlib"
-    ]
 )

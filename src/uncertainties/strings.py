@@ -1,5 +1,6 @@
-from numbers import Real
-from typing import Tuple
+from typing import Tuple, Union
+
+Real = Union[int, float]
 
 
 def uncertainty_str(val: Real, dval: Real) -> str:
@@ -22,15 +23,12 @@ def uncertainty_str(val: Real, dval: Real) -> str:
 
 
 def _uncertainty_str_decimal(val: Real, dval: Real) -> Tuple[str, str]:
-    try:
-        dpow = _get_pow(dval)
-        if _sci_str(abs(round(dval, -dpow)))[0] == "1":
-            dpow -= 1
-        val = round(val, -dpow)
-        dval = round(dval, -dpow)
-        precision = max(-dpow, 0)
-    except ValueError:
-        return f"{val} \u00b1 {dval}"
+    dpow = _get_pow(dval)
+    if _sci_str(abs(round(dval, -dpow)))[0] == "1":
+        dpow -= 1
+    val = round(val, -dpow)
+    dval = round(dval, -dpow)
+    precision = max(-dpow, 0)
 
     return _format(val, precision), _format(dval, precision)
 

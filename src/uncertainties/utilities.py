@@ -1,5 +1,5 @@
 import dataclasses
-from typing import Callable, Iterable, Tuple, TypeVar, Union
+from typing import Callable, Iterable, List, Tuple, TypeVar, Union
 
 import numpy as np
 
@@ -7,7 +7,7 @@ from uncertainties.val import Val
 
 T = TypeVar("T")
 V = TypeVar("V")
-Recursive = Iterable[Union[T, "Recursive"]]
+Recursive = List[Union[T, "Recursive"]]
 
 
 def reduce_recursive(function: Callable[..., V], *iterables: Recursive[V]) -> Recursive[V]:
@@ -46,7 +46,7 @@ def from_val_array(val_array: np.ndarray) -> Tuple[np.ndarray, np.ndarray]:
     return values, uncertanties
 
 
-def weighted_average(values: Iterable) -> Val:
+def weighted_average(values: Iterable[Val]) -> Val:
     return Val(
         np.average([x.value for x in values], weights=[x.uncertainty ** -2 for x in values]),
         np.average([x.uncertainty for x in values], weights=[x.uncertainty ** -2 for x in values]),

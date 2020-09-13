@@ -1,11 +1,10 @@
 import dataclasses
 import math
-from numbers import Real
 from typing import Union
 
 import pytest
 
-from uncertainties.val import Val
+from uncertainties.val import Real, Val
 
 
 @pytest.mark.parametrize(
@@ -17,7 +16,7 @@ from uncertainties.val import Val
         (-5, Val(5, 3.21), Val(-10, 3.21)),
     ),
 )
-def test_subtraction(val1: Union[Real, Val], val2: Union[Real, Val], expected: Val):
+def test_subtraction(val1: Union[Val, Real], val2: Union[Val, Real], expected: Val):
     assert dataclasses.astuple(val1 - val2) == pytest.approx(dataclasses.astuple(expected))
 
 
@@ -30,7 +29,7 @@ def test_subtraction(val1: Union[Real, Val], val2: Union[Real, Val], expected: V
         (-2, Val(5, 3.21), Val(3, 3.21)),
     ),
 )
-def test_addition(val1: Union[Real, Val], val2: Union[Real, Val], expected: Val):
+def test_addition(val1: Union[Val, Real], val2: Union[Val, Real], expected: Val):
     assert dataclasses.astuple(val1 + val2) == pytest.approx(dataclasses.astuple(expected))
 
 
@@ -43,7 +42,7 @@ def test_addition(val1: Union[Real, Val], val2: Union[Real, Val], expected: Val)
         (-2, Val(5, 3.21), Val(-10, math.sqrt((2 ** 2) * (3.21 ** 2)))),
     ),
 )
-def test_multiplication(val1: Union[Real, Val], val2: Union[Real, Val], expected: Val):
+def test_multiplication(val1: Union[Val, Real], val2: Union[Val, Real], expected: Val):
     assert dataclasses.astuple(val1 * val2) == pytest.approx(dataclasses.astuple(expected))
 
 
@@ -55,7 +54,7 @@ def test_multiplication(val1: Union[Real, Val], val2: Union[Real, Val], expected
         (15, Val(3, 1), Val(5, math.sqrt((15 ** 2) / (3 ** 4)))),
     ),
 )
-def test_division(val1: Union[Real, Val], val2: Union[Real, Val], expected: Val):
+def test_division(val1: Union[Val, Real], val2: Union[Val, Real], expected: Val):
     assert dataclasses.astuple(val1 / val2) == pytest.approx(dataclasses.astuple(expected))
 
 
@@ -74,7 +73,7 @@ def _power_uncertainty(a: Real, b: Real, x: Real, y: Real) -> Real:
         (10, Val(2, 1), Val(100, _power_uncertainty(10, 0, 2, 1))),
     ),
 )
-def test_power(val: Union[Real, Val], power: Union[Real, Val], expected: Val):
+def test_power(val: Union[Val, Real], power: Union[Val, Real], expected: Val):
     assert dataclasses.astuple(val ** power) == pytest.approx(dataclasses.astuple(expected))
 
 

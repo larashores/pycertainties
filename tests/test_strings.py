@@ -1,8 +1,7 @@
-from numbers import Real
-
 import pytest
 
-from uncertainties.strings import uncertainty_str
+from uncertainties import strings
+from uncertainties.val import Real
 
 
 @pytest.mark.parametrize(
@@ -22,4 +21,4 @@ from uncertainties.strings import uncertainty_str
     ),
 )
 def test_uncertainty_str(value: Real, uncertainty: Real, result: str):
-    assert uncertainty_str(value, uncertainty) == result
+    assert strings.uncertainty_str(value, uncertainty) == result

@@ -1,3 +1,5 @@
+from typing import Iterable
+
 import numpy as np
 import pytest
 
@@ -80,7 +82,7 @@ def test_reduce_recursive(function, iterables, expected):
         ),
     ),
 )
-def test_weighted_average(values, expected):
+def test_weighted_average(values: Iterable[Val], expected: Val):
     res = utilities.weighted_average(values)
     print(res.value, res.uncertainty)
     assert_approx(utilities.weighted_average(values), expected)

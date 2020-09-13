@@ -1,4 +1,3 @@
-from numbers import Real
 from typing import Dict, Iterable, Union
 
 import sympy as sp
@@ -6,7 +5,10 @@ from sympy.core.expr import Expr
 from sympy.parsing.sympy_parser import parse_expr
 
 from uncertainties import utilities as utils
-from uncertainties.val import Val
+from uncertainties.val import Real, Val
+
+IterableValOrReal = Iterable[Union["Val", Real, "IterableValOrReal"]]
+RecursiveValOrReal = Union["Val", Real, IterableValOrReal]
 
 
 def uncertainty(expr: Union[str, Expr], *variables: str) -> Expr:
@@ -22,7 +24,7 @@ def uncertainty(expr: Union[str, Expr], *variables: str) -> Expr:
     )
 
 
-def calculate(expr: Union[str, Expr], **values):
+def calculate(expr: Union[str, Expr], **values: RecursiveValOrReal):
     if isinstance(expr, str):
         expr = parse_expr(expr)
 
@@ -38,14 +40,13 @@ def calculate(expr: Union[str, Expr], **values):
         return _calculate(expr, **constants)
 
 
-def _calculate(expr: Union[str, Expr], **values: Union[Val, Real]) -> Real:
+def _calculate(expr: Union[str, Expr], **values: Union[Val, Real]) -> Val:
     if isinstance(expr, str):
         expr = parse_expr(expr)
 
     uncertainty_expr = uncertainty(expr, *(key for key, value in values.items() if isinstance(value, Val)))
     to_sub = _create_subs_map(**values)
-    result = Val(float(expr.subs(to_sub).evalf()), float(uncertainty_expr.subs(to_sub).evalf()))
-    return result
+    return Val(float(expr.subs(to_sub).evalf()), float(uncertainty_expr.subs(to_sub).evalf()))
 
 
 def _create_subs_map(**values: Union[Val, Real]) -> Dict[str, Real]:

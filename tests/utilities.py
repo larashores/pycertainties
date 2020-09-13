@@ -1,17 +1,18 @@
-from typing import Iterable
+from typing import Generator, Iterable, Union
 
 import pytest
 
-from uncertainties.val import Val
+from uncertainties.calculations import IterableValOrReal
+from uncertainties.val import Real, Val
 
 
-def assert_approx(got: Val, expected: Val) -> bool:
+def assert_approx(got: Union[Val, Real], expected: Union[Val, Real]) -> None:
     got_value, got_uncertainty = (got.value, got.uncertainty) if isinstance(got, Val) else (got, 0)
     ex_value, ex_uncertainty = (expected.value, expected.uncertainty) if isinstance(expected, Val) else (expected, 0)
     assert (got_value, got_uncertainty) == pytest.approx((ex_value, ex_uncertainty))
 
 
-def traverse(items):
+def traverse(items: IterableValOrReal) -> Generator[Union[Val, Real], None, None]:
     for item in items:
         if isinstance(item, Iterable):
             for value in traverse(item):

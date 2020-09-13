@@ -1,10 +1,11 @@
 import math
-from typing import Tuple
+from typing import Dict, Tuple
 
 import pytest
 
 from tests import utilities
 from uncertainties import calculations
+from uncertainties.calculations import IterableValOrReal
 from uncertainties.val import Val
 
 
@@ -28,7 +29,7 @@ def test_uncertainty(expr: str, variables: Tuple[str], expected: str):
         ("x*y+z", {"x": Val(3, 0.1), "y": Val(3, 3), "z": 4}, Val(13, math.sqrt(0.1 ** 2 * 3 ** 2 + 3 ** 2 * 3 ** 2))),
     ),
 )
-def test_calculate(expr, values, expected):
+def test_calculate(expr: str, values: Dict[str, Val], expected: Val):
     utilities.assert_approx(calculations.calculate(expr, **values), expected)
 
 
@@ -64,7 +65,7 @@ def test_calculate(expr, values, expected):
         ),
     ),
 )
-def test_calculate_list(expr, values, expected):
+def test_calculate_list(expr: str, values: Dict[str, IterableValOrReal], expected: IterableValOrReal):
     result = calculations.calculate(expr, **values)
 
     for got, ex in zip(utilities.traverse(result), utilities.traverse(expected)):
