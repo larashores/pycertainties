@@ -9,23 +9,23 @@ from uncertainties.val import Real, Val
 EXPECTED_UNCERTAINTY_1 = """
 f(...) = x⋅y + z
              _________________
-            ╱   2  2     2  2 
-df(...) = ╲╱  dx ⋅y  + dy ⋅x  
+            ╱  2   2    2   2 
+δf(...) = ╲╱  x ⋅δy  + y ⋅δx  
 """
 
 EXPECTED_UNCERTAINTY_2 = """
           y
 f(...) = x 
              __________________
-            ╱   2  2⋅y    2    
-df(...) = ╲╱  dy ⋅x   ⋅log (x) 
+            ╱  2⋅y   2    2    
+δf(...) = ╲╱  x   ⋅δy ⋅log (x) 
 """
 
 EXPECTED_UNCERTAINTY_3 = """
 f(...) = sin(x)
              _____________
             ╱   2    2    
-df(...) = ╲╱  dx ⋅cos (x) 
+δf(...) = ╲╱  δx ⋅cos (x) 
 """
 
 EXPECTED_CALCULATION_1 = """
@@ -33,8 +33,8 @@ f(...) = log(x)
 	-> 7.380879035564116
                 _____
                ╱   2 
-              ╱  dx  
-df(...) =    ╱   ─── 
+              ╱  δx  
+δf(...) =    ╱   ─── 
             ╱      2 
           ╲╱      x  
 	-> 0.03302180685358255
@@ -45,7 +45,7 @@ f(...) = x - log(300)
 	-> 1.6770965609079151
              _____
             ╱   2 
-df(...) = ╲╱  dx  
+δf(...) = ╲╱  δx  
 	-> 3.970291913552122
 """
 
@@ -53,8 +53,8 @@ EXPECTED_CALCULATION_3 = """
 f(...) = x⋅y + z
 	-> 13.0
              _________________
-            ╱   2  2     2  2 
-df(...) = ╲╱  dx ⋅y  + dy ⋅x  
+            ╱  2   2    2   2 
+δf(...) = ╲╱  x ⋅δy  + y ⋅δx  
 	-> 9.00499861188218
 """
 
@@ -68,6 +68,7 @@ df(...) = ╲╱  dx ⋅y  + dy ⋅x
     ),
 )
 def test_pprint_uncertainty(expr: str, variables: Tuple[str], expected: str, capsys):
+    """Tests that the pprinted representations of uncertainty equations represent the correct equations"""
     pprinting.pprint_uncertainty(expr, *variables)
     out, _ = capsys.readouterr()
     assert out == expected.lstrip("\n")
@@ -81,7 +82,11 @@ def test_pprint_uncertainty(expr: str, variables: Tuple[str], expected: str, cap
         ("x*y+z", {"x": Val(3, 0.1), "y": Val(3, 3), "z": 4}, EXPECTED_CALCULATION_3),
     ),
 )
-def test_(expr: str, values: Dict[str, Union[Val, Real]], expected: str, capsys):
+def test_pprint_calculation(expr: str, values: Dict[str, Union[Val, Real]], expected: str, capsys):
+    """
+    Tests that the pprinted representations of uncertainty equations and their calculated values represent the correct
+    equations.
+    """
     pprinting.pprint_calculation(expr, **values)
     out, _ = capsys.readouterr()
     assert out == expected.lstrip("\n")

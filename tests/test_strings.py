@@ -21,4 +21,5 @@ from uncertainties.val import Real
     ),
 )
 def test_uncertainty_str(value: Real, uncertainty: Real, result: str):
+    """Tests that string representions of values and uncertainties are correct"""
     assert strings.uncertainty_str(value, uncertainty) == result

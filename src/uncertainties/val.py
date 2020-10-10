@@ -11,6 +11,36 @@ RecursiveReal = Union[Real, IterableReal]
 
 @dataclass
 class Val:
+    """
+    This class is number-like type that represents a value and associated uncertainty.
+
+    Implements common mathmetical operators and a few mathmatics functions. Uses the following equation calulating
+    uncertainties:
+        δf(r_i) = √(Σ(df/dr_i^2*δr_i^2))
+
+    Additionally, Val(a, b) comes with appropriate string conversions based on the relative and absolute values of
+    a and b.
+
+    Examples)
+                                  Val(10, 4) - Val(4, 3) == Val(-10.0, 5.0)
+                                       Val(63.5, 1) ** 3 == Val(256047.875, 12096.75)
+                            Val(100, 2) + Val(50.5, 0.2) == Val(150.5, 2.009975124224178)
+                                      Val(100, .1).sin() == Val(-0.5063656411097588, 0.08623188722876839)
+                     Val(4.605170185988092, 0.001).log() == Val(4.605170185988092, 0.001)
+
+                                  str(Val(321.8, .0324)) == "321.80 ± 0.03"
+                                str(Val(321.856, .0324)) == "321.86 ± 0.03"
+                                 str(Val(321.856, 3.86)) == "322 ± 4"
+                               str(Val(-321.856, 11.34)) == "-322 ± 11"
+                         str(Val(3.21856e-10, 3.24e-12)) == "(3.22 ± 0.03)e-10"
+                            str(Val(3.21856e10, 3.24e8)) == "(3.22 ± 0.03)e10"
+                            str(Val(3.21856e10, 1.24e8)) == "(3.219 ± 0.012)e10"
+                str(Val(0.02094495456, 9.541774545e-05)) == "0.020945 ± 0.000095"
+                str(Val(0.02094495456, 9.341774545e-05)) == "0.02094 ± 0.00009"
+        str(Val(3559.8838983606497, 21.815841616631992)) == "3560 ± 20"
+
+    """
+
     value: Real
     uncertainty: Real
 
@@ -18,7 +48,7 @@ class Val:
         return uncertainty_str(self.value, self.uncertainty)
 
     def __repr__(self) -> str:
-        return f"({self})"
+        return f"Val({self.value}, {self.uncertainty})"
 
     def __format__(self, format_spec: str) -> str:
         return str(self)

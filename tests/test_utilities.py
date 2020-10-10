@@ -19,6 +19,7 @@ from uncertainties.val import Val
     ),
 )
 def test_to_val_array(values: np.ndarray, uncertainties: np.ndarray, expected: np.ndarray):
+    """Tests that value and uncertainty arrays can be combined correctly into a single Val array"""
     result = utilities.to_val_array(values, uncertainties)
     for ind in np.ndindex(result.shape):
         assert_approx(result[ind], expected[ind])
@@ -35,6 +36,7 @@ def test_to_val_array(values: np.ndarray, uncertainties: np.ndarray, expected: n
     ),
 )
 def test_from_val_array(val_array: np.ndarray, expected_values: np.ndarray, expected_uncertainties: np.ndarray):
+    """Tests that a single Val array can be correctly split into value and uncertainty arrays"""
     values, uncertainties = utilities.from_val_array(val_array)
     assert values.shape == uncertainties.shape
     for ind in np.ndindex(val_array.shape):
@@ -55,8 +57,8 @@ def test_from_val_array(val_array: np.ndarray, expected_values: np.ndarray, expe
         ),
     ),
 )
-def test_reduce_recursive(function, iterables, expected):
-    result = utilities.reduce_recursive(function, *iterables)
+def test_operate_recursive(function, iterables, expected):
+    result = utilities.operate_recursive(function, *iterables)
     for got, ex in zip(traverse(result), traverse(expected)):
         assert_approx(got, ex)
 

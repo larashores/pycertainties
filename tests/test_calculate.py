@@ -12,12 +12,13 @@ from uncertainties.val import Val
 @pytest.mark.parametrize(
     "expr, variables, expected",
     (
-        ("x*y+z", ("x", "y"), "sqrt(dx**2*y**2 + dy**2*x**2)"),
-        ("x ** y", ("y"), "sqrt(dy**2*x**(2*y)*log(x)**2)"),
-        ("sin(x)", ("x",), "sqrt(dx**2*cos(x)**2)"),
+        ("x*y+z", ("x", "y"), "sqrt(x**2*δy**2 + y**2*δx**2)"),
+        ("x ** y", ("y"), "sqrt(x**(2*y)*δy**2*log(x)**2)"),
+        ("sin(x)", ("x",), "sqrt(δx**2*cos(x)**2)"),
     ),
 )
 def test_uncertainty(expr: str, variables: Tuple[str], expected: str):
+    """Tests that the string representations of calculated uncertainty equations represent the correct equations"""
     assert str(calculations.uncertainty(expr, *variables)) == expected
 
 
@@ -30,6 +31,7 @@ def test_uncertainty(expr: str, variables: Tuple[str], expected: str):
     ),
 )
 def test_calculate(expr: str, values: Dict[str, Val], expected: Val):
+    """Tests that calculate works correctly with non-iterable values"""
     utilities.assert_approx(calculations.calculate(expr, **values), expected)
 
 
@@ -66,6 +68,10 @@ def test_calculate(expr: str, values: Dict[str, Val], expected: Val):
     ),
 )
 def test_calculate_list(expr: str, values: Dict[str, IterableValOrReal], expected: IterableValOrReal):
+    """
+    Tests that the calculate function returns lists of the correct shape and values when calculating equation with
+    iterable values.
+    """
     result = calculations.calculate(expr, **values)
 
     for got, ex in zip(utilities.traverse(result), utilities.traverse(expected)):

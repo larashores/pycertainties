@@ -17,6 +17,7 @@ from uncertainties.val import Real, Val
     ),
 )
 def test_subtraction(val1: Union[Val, Real], val2: Union[Val, Real], expected: Val):
+    """Tests that Vals can be subtracted by/from each other and subtracted by/from int/floats"""
     assert dataclasses.astuple(val1 - val2) == pytest.approx(dataclasses.astuple(expected))
 
 
@@ -30,6 +31,7 @@ def test_subtraction(val1: Union[Val, Real], val2: Union[Val, Real], expected: V
     ),
 )
 def test_addition(val1: Union[Val, Real], val2: Union[Val, Real], expected: Val):
+    """Tests that Vals can be added to each other and added to int/floats"""
     assert dataclasses.astuple(val1 + val2) == pytest.approx(dataclasses.astuple(expected))
 
 
@@ -43,6 +45,7 @@ def test_addition(val1: Union[Val, Real], val2: Union[Val, Real], expected: Val)
     ),
 )
 def test_multiplication(val1: Union[Val, Real], val2: Union[Val, Real], expected: Val):
+    """Tests that Vals can be multiplied by each other and int/floats"""
     assert dataclasses.astuple(val1 * val2) == pytest.approx(dataclasses.astuple(expected))
 
 
@@ -55,10 +58,12 @@ def test_multiplication(val1: Union[Val, Real], val2: Union[Val, Real], expected
     ),
 )
 def test_division(val1: Union[Val, Real], val2: Union[Val, Real], expected: Val):
+    """Tests that Vals can be divided by/from each other and divided by/from int/floats"""
     assert dataclasses.astuple(val1 / val2) == pytest.approx(dataclasses.astuple(expected))
 
 
 def _power_uncertainty(a: Real, b: Real, x: Real, y: Real) -> Real:
+    """Returns the uncertainty of (a ± b)^(x ± y)"""
     s = a ** (2 * x)
     first = (b ** 2) * ((s * x ** 2) / (a ** 2))
     second = (y ** 2) * (s * math.log(a) ** 2)
@@ -74,6 +79,7 @@ def _power_uncertainty(a: Real, b: Real, x: Real, y: Real) -> Real:
     ),
 )
 def test_power(val: Union[Val, Real], power: Union[Val, Real], expected: Val):
+    """Tests that Val objects can be correctly raised to a power"""
     assert dataclasses.astuple(val ** power) == pytest.approx(dataclasses.astuple(expected))
 
 
@@ -82,6 +88,7 @@ def test_power(val: Union[Val, Real], power: Union[Val, Real], expected: Val):
     ((Val(10, 2), Val(math.log(10), math.sqrt((2 ** 2) / (10 ** 2)))),),
 )
 def test_log(val: Val, expected: Val):
+    """Tests that the log can be taken of Val objects"""
     assert dataclasses.astuple(val.log()) == pytest.approx(dataclasses.astuple(expected))
 
 
@@ -90,6 +97,7 @@ def test_log(val: Val, expected: Val):
     ((Val(10, 2), Val(math.sin(10), math.sqrt((2 ** 2) * (math.cos(10) ** 2)))),),
 )
 def test_sin(val: Val, expected: Val):
+    """Tests that the sin of Val objects can be taken"""
     assert dataclasses.astuple(val.sin()) == pytest.approx(dataclasses.astuple(expected))
 
 
@@ -98,4 +106,5 @@ def test_sin(val: Val, expected: Val):
     ((Val(16, 3), Val(4, _power_uncertainty(16, 3, 1 / 2, 0))),),
 )
 def test_sqrt(val: Val, expected: Val):
+    """Tests that the sqrt of Val objects can be taken"""
     assert dataclasses.astuple(val.sqrt()) == pytest.approx(dataclasses.astuple(expected))
