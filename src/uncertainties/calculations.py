@@ -7,8 +7,8 @@ from sympy.parsing.sympy_parser import parse_expr
 from uncertainties import utilities as utils
 from uncertainties.val import Real, Val
 
-IterableValOrReal = Iterable[Union["Val", Real, "IterableValOrReal"]]
-ListValOrReal = List[Union["Val", Real, "ListValOrReal"]]
+IterableValOrReal = Iterable[Union["Val", Real, "IterableValOrReal"]]  # type: ignore
+ListValOrReal = List[Union["Val", Real, "ListValOrReal"]]  # type: ignore
 
 
 def uncertainty(expr: Union[str, Expr], *variables: str) -> Expr:
@@ -57,6 +57,7 @@ def calculate(expr: Union[str, Expr], **values: Union["Val", Real, IterableValOr
     if isinstance(expr, str):
         expr = parse_expr(expr)
 
+    # pylint: disable=W1116
     constants = {key: value for key, value in values.items() if not isinstance(value, Iterable)}
     iterables = {key: value for key, value in values.items() if isinstance(value, Iterable)}
 

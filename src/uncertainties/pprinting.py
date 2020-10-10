@@ -18,7 +18,7 @@ def pprint_uncertainty(expr: Union[str, Expr], *variables: str) -> None:
     equation and the uncertainty of the result of the equation.
 
     Example)
-        pprint_uncertainty("x*y + z", "x, y") ->
+        pprint_uncertainty("x*y + z", "x", "y") ->
             f(...) = x⋅y + z
                         _________________
                         ╱   2  2     2  2
@@ -53,7 +53,7 @@ def pprint_calculation(expr: Union[str, Expr], **values: Union["Val", Real]) -> 
     result = calculate(expr, **values)
 
     sp.pprint(sp.Eq(f, expr))
-    print("\t->", result.value)
+    print("\t->", result.value)  # type: ignore
 
     sp.pprint(sp.Eq(df, uncertainty(expr, *(key for key, value in values.items() if isinstance(value, Val)))))
-    print("\t->", result.uncertainty)
+    print("\t->", result.uncertainty)  # type: ignore

@@ -32,7 +32,7 @@ def test_uncertainty(expr: str, variables: Tuple[str], expected: str):
 )
 def test_calculate(expr: str, values: Dict[str, Val], expected: Val):
     """Tests that calculate works correctly with non-iterable values"""
-    utilities.assert_approx(calculations.calculate(expr, **values), expected)
+    utilities.assert_approx(calculations.calculate(expr, **values), expected)  # type: ignore
 
 
 @pytest.mark.parametrize(
@@ -74,5 +74,5 @@ def test_calculate_list(expr: str, values: Dict[str, IterableValOrReal], expecte
     """
     result = calculations.calculate(expr, **values)
 
-    for got, ex in zip(utilities.traverse(result), utilities.traverse(expected)):
+    for got, ex in zip(utilities.traverse(result), utilities.traverse(expected)):  # type: ignore
         utilities.assert_approx(got, ex)

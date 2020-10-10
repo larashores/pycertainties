@@ -7,8 +7,8 @@ from uncertainties.val import Val
 
 T = TypeVar("T")
 V = TypeVar("V")
-RecursiveIterable = Iterable[Union[T, "RecursiveIterable"]]
-RecursiveList = List[Union[T, "RecursiveList"]]
+RecursiveIterable = Iterable[Union[T, "RecursiveIterable"]]  # type: ignore
+RecursiveList = List[Union[T, "RecursiveList"]]  # type: ignore
 
 
 def operate_recursive(function: Callable[..., V], *iterables: RecursiveIterable[V]) -> RecursiveList[V]:
@@ -33,12 +33,12 @@ def _operate_recursive(
     function: Callable[..., V], iterables: RecursiveIterable[V], result: RecursiveList[V]
 ) -> RecursiveList[V]:
     """Private function performing the work of operate_recursive recursively"""
-    for items in zip(*iterables):
-        if any(isinstance(item, Iterable) for item in items):
-            sub_result = []
+    for items in zip(*iterables):  # type: ignore
+        if any(isinstance(item, Iterable) for item in items):  # pylint: disable=W1116
+            sub_result = []  # type: ignore
             _operate_recursive(function, items, sub_result)
         else:
-            sub_result = function(*items)
+            sub_result = function(*items)  # type: ignore
         result.append(sub_result)
     return result
 
@@ -68,7 +68,7 @@ def from_val_array(val_array: np.ndarray) -> Tuple[np.ndarray, np.ndarray]:
     Converts a numpy array of Val types to a tuple where both item are numpy arrays of float/integer types where the
     first consists of the array's values where the second consists of the array's uncertainties.
 
-        from_val_array(np.array([Val(10, 0.1), Val(100, 0.15), Val(80, 0.35)])
+        from_val_array(np.array([Val(10, 0.1), Val(100, 0.15), Val(80, 0.35)]))
             == (np.array([10, 100, 80]), np.array([.1, .15, .35]))
     """
     values = np.zeros(val_array.shape)

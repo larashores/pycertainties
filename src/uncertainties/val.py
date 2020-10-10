@@ -5,8 +5,8 @@ import numpy as np
 
 from uncertainties.strings import Real, uncertainty_str
 
-IterableReal = Iterable[Union[Real, "IterableReal"]]
-RecursiveReal = Union[Real, IterableReal]
+IterableReal = Iterable[Union[Real, "IterableReal"]]  # type: ignore
+RecursiveReal = Union[Real, IterableReal]  # type: ignore
 
 
 @dataclass

@@ -18,7 +18,7 @@ def assert_approx(got: Union[Val, Real], expected: Union[Val, Real]) -> None:
 def traverse(items: IterableValOrReal) -> Generator[Union[Val, Real], None, None]:
     """Generator that traverses an iterable of more iterables or scalars, generating each scalar"""
     for item in items:
-        if isinstance(item, Iterable):
+        if isinstance(item, Iterable):  # pylint: disable=W1116
             for value in traverse(item):
                 yield value
         else:

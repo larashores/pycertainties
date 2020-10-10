@@ -1,5 +1,6 @@
-from setuptools import setup
 import os
+
+from setuptools import setup
 
 path = os.path.abspath(os.path.dirname(__file__))
 with open(os.path.join("README.md")) as file:
@@ -14,7 +15,7 @@ setup(
     author="Lara Shores",
     author_email="lara.shores@outlook.com",
     url="https://github.com/larashores",
-    description="TODO: this",
+    description="Module providing utilities for working with values with uncertainties",
     long_description=README,
     long_description_content_type="text/markdown",
     classifiers=[

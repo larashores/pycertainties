@@ -32,7 +32,7 @@ def test_subtraction(val1: Union[Val, Real], val2: Union[Val, Real], expected: V
 )
 def test_addition(val1: Union[Val, Real], val2: Union[Val, Real], expected: Val):
     """Tests that Vals can be added to each other and added to int/floats"""
-    assert dataclasses.astuple(val1 + val2) == pytest.approx(dataclasses.astuple(expected))
+    assert dataclasses.astuple(val1 + val2) == pytest.approx(dataclasses.astuple(expected))  # type: ignore
 
 
 @pytest.mark.parametrize(
