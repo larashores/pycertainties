@@ -8,6 +8,10 @@ mypy = "*"
 pylint = "*"
 pytest = "*"
 black = "*"
+wheel = "*"
+twine = "*"
+setuptools = "*"
+click = "*"
 
 [packages]
 numpy = "*"
