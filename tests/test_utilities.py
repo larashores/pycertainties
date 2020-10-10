@@ -3,9 +3,9 @@ from typing import Iterable
 import numpy as np
 import pytest
 
-from tests.utilities import assert_approx, traverse
 from pycertainties import utilities
 from pycertainties.val import Val
+from tests.utilities import assert_approx, traverse
 
 
 @pytest.mark.parametrize(

@@ -6,9 +6,17 @@ from typing import Optional
 import click
 
 
-@click.option("--token")
+@click.option(
+    "--token", help="Optionally authenticate with a PyPi API token. Otherwise prompt for username/password on stdin"
+)
 @click.command()
 def pypy(token: Optional[str]):
+    """
+    Command used to build and upload the project to PyPi in a single step.
+
+    Either run `python scripts/pypy.py` and type in your username/password in stdin, or run `python scripts/pypy.py
+    --token pypi-token`, substituting in a valid PyPi API token for your account.
+    """
     upload_command = "twine upload dist/*"
     if token is not None:
         upload_command += f" --username __token__ --password {token}"

@@ -10,7 +10,7 @@ This module contains various utilities for working determining, calculating, and
 
 The `val` submodule provides a single type, `Val`, that can be used to store values that have an associated uncertainty, and perform calculations on those value as if they were any other number.
 
-For example, the value 10.33 ± .12 is represented by `Val(10.33, 0.12)`. 
+For example, the value 10.33 ± 0.12 is represented by `Val(10.33, 0.12)`. 
 
 
 The `str` conversion returns a sensible representation of the `Val`.
@@ -53,8 +53,9 @@ For example:
     >>> calculate("x*y + z", x=Val(3, 0.1), y=[Val(3, 1), [Val(5, 1)]], z=4)
     [13 ± 3, [19 ± 3]]
     >>> import numpy as np
-    >>> calculate("x*y + z", x=Val(3, 0.1), y=numpy.array([Val(3, 1), Val(5, 1)]), z=4) 
-    >>> calculate("x*y + z", x=Val(3, 0.1), y=np.array([Val(3, 1), Val(5, 1)]), z=4)
+    >>> np.array(calculate("x*y + z", x=Val(3, 0.1), y=np.array([[Val(3, 1), Val(5e10, 1e10)], [5, 6]]), z=4))
+      [[(13 ± 3) (1.5 ± 0.3)e11] 
+     [(19.0 ± 0.5) (22.0 ± 0.6)]]
 
 For a modest speed-up the first argument can also be a sympy expression so that the equation string only needs to be parsed once.
 

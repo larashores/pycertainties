@@ -3,10 +3,10 @@ from typing import Dict, Tuple
 
 import pytest
 
-from tests import utilities
 from pycertainties import calculations
 from pycertainties.calculations import IterableValOrReal
 from pycertainties.val import Val
+from tests import utilities
 
 
 @pytest.mark.parametrize(
