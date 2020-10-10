@@ -4,8 +4,8 @@ import sympy as sp
 from sympy.core.expr import Expr
 from sympy.parsing.sympy_parser import parse_expr
 
-from uncertainties import utilities as utils
-from uncertainties.val import Real, Val
+from pycertainties import utilities as utils
+from pycertainties.val import Real, Val
 
 IterableValOrReal = Iterable[Union["Val", Real, "IterableValOrReal"]]  # type: ignore
 ListValOrReal = List[Union["Val", Real, "ListValOrReal"]]  # type: ignore

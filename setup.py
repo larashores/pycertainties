@@ -7,8 +7,8 @@ with open(os.path.join("README.md")) as file:
     README = file.read()
 
 setup(
-    name="uncertainties",
-    packages=["uncertainties"],
+    name="pycertainties",
+    packages=["pycertainties"],
     package_dir={"": "src"},
     python_requires=">=3.8",
     version="1.0",

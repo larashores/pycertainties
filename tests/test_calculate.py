@@ -4,9 +4,9 @@ from typing import Dict, Tuple
 import pytest
 
 from tests import utilities
-from uncertainties import calculations
-from uncertainties.calculations import IterableValOrReal
-from uncertainties.val import Val
+from pycertainties import calculations
+from pycertainties.calculations import IterableValOrReal
+from pycertainties.val import Val
 
 
 @pytest.mark.parametrize(

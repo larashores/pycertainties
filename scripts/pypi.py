@@ -25,7 +25,7 @@ def pypy(token: Optional[str]):
             print()
     finally:
         # Cleanup
-        for path in "build", "dist", os.path.join("src", "uncertainties.egg-info"):
+        for path in "build", "dist", os.path.join("src", "pycertainties.egg-info"):
             if os.path.exists(path):
                 shutil.rmtree(path)
 

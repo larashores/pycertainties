@@ -3,8 +3,8 @@ from typing import Dict, Tuple, Union
 
 import pytest
 
-from uncertainties import pprinting
-from uncertainties.val import Real, Val
+from pycertainties import pprinting
+from pycertainties.val import Real, Val
 
 EXPECTED_UNCERTAINTY_1 = """
 f(...) = x⋅y + z

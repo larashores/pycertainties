@@ -1,12 +1,12 @@
-# uncertainties
+# pycertainties
 
 For all functions ![f\left( ;x_0,x_1,...,x_i\right)](https://latex.codecogs.com/svg.latex?f\left(&space;x_0,x_1,...,x_i\right)), where each value ![x_i](https://latex.codecogs.com/svg.latex?x_i) has an associated uncertainty ![\delta x_i](https://latex.codecogs.com/svg.latex?\delta&space;x_i), the uncertainty of the function ![\delta f](https://latex.codecogs.com/svg.latex?\delta&space;f), is equal to:
 
 ![\Large \delta f=\sqrt{\sum_{i}{\left(\frac{\partial f}{\partial x_i}\right)}^2(\delta x_i)^2}](https://latex.codecogs.com/svg.latex?&space;\delta&space;f=\sqrt{\sum_{i}{\left(\frac{\partial&space;f}{\partial&space;x_i}\right)}^2(\delta&space;x_i)^2})
 
-This module contains various utilities for working determining, calculating, and working with values with uncertainties. All of the functions and types in the submodules below are also accesible directly from the `uncertainties` module.
+This module contains various utilities for working determining, calculating, and working with values with uncertainties. All of the functions and types in the submodules below are also accesible directly from the `pycertainties` module.
 
-## uncertainties.val
+## pycertainties.val
 
 The `val` submodule provides a single type, `Val`, that can be used to store values that have an associated uncertainty, and perform calculations on those value as if they were any other number.
 
@@ -41,7 +41,7 @@ We can use the usual operators with `Val` types.
     >>> Val(10.33, 0.12).log()
     2.335 ± 0.012
 
-## uncertainties.calculations
+## pycertainties.calculations
 
 One possible concern with using `Val`s are accumulated round-off errors. Especially for computing uncertainties of more complex functions, the amount of intermediate steps can be signifigant, and the round-off errors add up.
 If these errors are a concern, the `calculations.calculate(...)` function provides a way to first calculate the uncertainty equation of an equation symoblically (using `sympy` under the hood), and then calculate the value of that uncertainty equation as the last step.
@@ -73,7 +73,7 @@ The uncertainty equation can also be determined without any values to calculate 
       ╱  2   2    2   2
     ╲╱  x ⋅δy  + y ⋅δx
 
-## uncertainties.pprinting
+## pycertainties.pprinting
 
 This submodule contains two functions that provide easy ways of visualizing results. The `pprinting.pprint_uncertainty(...)` function takes arguments of the same form as `calculations.uncertainty(...)`. It will pretty-print the original equation as well as its uncertainty equation.
 
@@ -94,7 +94,7 @@ This submodule contains two functions that provide easy ways of visualizing resu
     δf(...) = ╲╱  x ⋅δy  + y ⋅δx
             -> 9.00499861188218
 
-## uncertainties.strings
+## pycertainties.strings
 
 This submodule provides a single public function, `strings.uncertainty_str(...)` that will return a proper string representation of a value and its uncertainty. The expression `str(Val(x, y))` is equivilent to `uncertainty_str(x, y)`.
 
@@ -105,7 +105,7 @@ This submodule provides a single public function, `strings.uncertainty_str(...)`
     >>> uncertainty_str(0.02094495456, 9.541774545e-05)
     0.020945 ± 0.000095
 
-## uncertainties.utilities
+## pycertainties.utilities
 
 This submodule provides a few useful functions for working with uncertainties in `numpy`.
 
@@ -118,7 +118,7 @@ The `utilities.to_val_array(...)` function converts two numpy arrays of int/floa
 
 The `utilities.weighted_average(...)` function calculates a weighted average of a list of `Val` objects using `numpy`.
 
-    >>> weighted_average([Val(5, .1), Val(100, 30), Val(10, 1), Val(15, .4)])
+    >>> weighted_average([Val(5, .1), Val(100,` 30), Val(10, 1), Val(15, .4)])
     5.63 ± 0.13`
 
 Note that the large value of 100 does not appreciably contribute to the average.

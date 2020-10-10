@@ -1,7 +1,7 @@
 import pytest
 
-from uncertainties import strings
-from uncertainties.val import Real
+from pycertainties import strings
+from pycertainties.val import Real
 
 
 @pytest.mark.parametrize(

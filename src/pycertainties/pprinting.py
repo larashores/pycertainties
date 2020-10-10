@@ -4,8 +4,8 @@ import sympy as sp
 from sympy.core.expr import Expr
 from sympy.parsing.sympy_parser import parse_expr
 
-from uncertainties.calculations import Real, calculate, uncertainty
-from uncertainties.val import Val
+from pycertainties.calculations import Real, calculate, uncertainty
+from pycertainties.val import Val
 
 f = sp.symbols("f(...)")
 df = sp.symbols("δf(...)")

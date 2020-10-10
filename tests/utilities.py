@@ -2,8 +2,8 @@ from typing import Generator, Iterable, Union
 
 import pytest
 
-from uncertainties.calculations import IterableValOrReal
-from uncertainties.val import Real, Val
+from pycertainties.calculations import IterableValOrReal
+from pycertainties.val import Real, Val
 
 
 def assert_approx(got: Union[Val, Real], expected: Union[Val, Real]) -> None:

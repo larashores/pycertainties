@@ -3,7 +3,7 @@ from typing import Callable, Iterable, List, Tuple, TypeVar, Union
 
 import numpy as np
 
-from uncertainties.val import Val
+from pycertainties.val import Val
 
 T = TypeVar("T")
 V = TypeVar("V")

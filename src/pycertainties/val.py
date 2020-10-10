@@ -3,7 +3,7 @@ from typing import Iterable, Union
 
 import numpy as np
 
-from uncertainties.strings import Real, uncertainty_str
+from pycertainties.strings import Real, uncertainty_str
 
 IterableReal = Iterable[Union[Real, "IterableReal"]]  # type: ignore
 RecursiveReal = Union[Real, IterableReal]  # type: ignore

@@ -4,8 +4,8 @@ import numpy as np
 import pytest
 
 from tests.utilities import assert_approx, traverse
-from uncertainties import utilities
-from uncertainties.val import Val
+from pycertainties import utilities
+from pycertainties.val import Val
 
 
 @pytest.mark.parametrize(

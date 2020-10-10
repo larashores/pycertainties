@@ -4,7 +4,7 @@ from typing import Union
 
 import pytest
 
-from uncertainties.val import Real, Val
+from pycertainties.val import Real, Val
 
 
 @pytest.mark.parametrize(
