@@ -11,7 +11,7 @@ setup(
     packages=["pycertainties"],
     package_dir={"": "src"},
     python_requires=">=3.8",
-    version="1.0",
+    version="1.0.1",
     author="Lara Shores",
     author_email="lara.shores@outlook.com",
     url="https://github.com/larashores",
@@ -24,4 +24,5 @@ setup(
         "Programming Language :: Python :: 3",
         "Topic :: Scientific/Engineering",
     ],
+    install_requires=["pycertainties"]
 )
