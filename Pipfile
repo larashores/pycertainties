@@ -14,8 +14,7 @@ setuptools = "*"
 click = "*"
 
 [packages]
-numpy = "*"
-sympy = "*"
+pycertainties = {editable = true, path = "."}
 
 [requires]
 python_version = "3.8"
